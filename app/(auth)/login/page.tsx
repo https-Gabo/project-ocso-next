@@ -1,66 +1,86 @@
 "use client";
 
+import { API_URL } from "@/constants";
+import { Button, Input } from "@nextui-org/react";
+import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function LoginPage() {
-  const [message, setMessage] = useState("");
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setMessage(
-      "El inicio de sesión todavía no está conectado al servicio de autenticación.",
-    );
-  }
-
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    try {
+      const formData = new FormData(e.currentTarget);
+      let authData: any = {};
+      authData.userEmail = formData.get("userEmail");
+      authData.userPassword = formData.get("userPassword");
+      const { data } = await axios.post(
+        `${API_URL}/auth/login`,
+        {
+          ...authData,
+        },
+        {
+          withCredentials: true,
+        },
+      );
+      console.log(data);
+      if (data?.token) {
+        localStorage.setItem("token", data.token);
+      }
+      router.push("/dashboard");
+    } catch (err: any) {
+      setError(
+        err?.response?.data?.message || "Ocurrió un error al iniciar sesión",
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
-    <main className="w-full max-w-md rounded-lg bg-white p-6 text-left shadow-xl sm:p-8">
-      <h1 className="text-2xl font-semibold text-slate-900">Iniciar sesión</h1>
-      <p className="mt-2 text-sm text-slate-600">Accede a tu cuenta.</p>
-
-      <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
-        <label className="block text-sm font-medium text-slate-700">
-          Correo electrónico
-          <input
-            className="mt-1.5 block min-h-11 w-full rounded-md border border-slate-300 px-3 text-base text-slate-900 outline-none transition focus:border-orange-600 focus:ring-2 focus:ring-orange-200"
-            type="email"
-            name="email"
-            autoComplete="email"
-            required
-          />
-        </label>
-        <label className="block text-sm font-medium text-slate-700">
-          Contraseña
-          <input
-            className="mt-1.5 block min-h-11 w-full rounded-md border border-slate-300 px-3 text-base text-slate-900 outline-none transition focus:border-orange-600 focus:ring-2 focus:ring-orange-200"
-            type="password"
-            name="password"
-            autoComplete="current-password"
-            required
-          />
-        </label>
-        <button
-          className="min-h-11 w-full rounded-md bg-orange-600 px-4 font-semibold text-white transition hover:bg-orange-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 focus-visible:ring-offset-2"
-          type="submit"
-        >
-          Iniciar sesión
-        </button>
-      </form>
-
-      {message && (
-        <p className="mt-4 text-sm text-slate-700" role="status">
-          {message}
+    <form
+      className="bg-orange-500 px-10 py-2 rounded-md"
+      onSubmit={handleSubmit}
+    >
+      <p className="text-2xl my-4 text-white">Iniciar sesión</p>
+      <div className="flex flex-col gap-2 my-4 items-center">
+        <Input
+          label="Email"
+          name="userEmail"
+          type="email"
+          isRequired={true}
+          size="sm"
+        />
+        <Input
+          label="Contraseña"
+          name="userPassword"
+          type="password"
+          isRequired={true}
+          size="sm"
+        />
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <Button color="primary" type="submit" isLoading={loading}>
+          Iniciar Sesión
+        </Button>
+        {error && (
+          <p className="text-white bg-red-600 px-3 py-1 rounded text-sm text-center">
+            {error}
+          </p>
+        )}
+        <p className="text-white">
+          ¿No tienes cuenta?{" "}
+          <Link href="/signup" className="text-red-600 underline">
+            Regístrate
+          </Link>
         </p>
-      )}
-      <p className="mt-6 text-center text-sm text-slate-600">
-        ¿No tienes cuenta?{" "}
-        <Link
-          className="font-semibold text-orange-700 hover:underline"
-          href="/signup"
-        >
-          Regístrate
-        </Link>
-      </p>
-    </main>
+      </div>
+    </form>
   );
 }

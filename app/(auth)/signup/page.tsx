@@ -1,12 +1,14 @@
 "use client";
 
+import { API_URL } from "@/constants";
+import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
 
 export default function SignupPage() {
   const [message, setMessage] = useState("");
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
 
@@ -15,9 +17,16 @@ export default function SignupPage() {
       return;
     }
 
-    setMessage(
-      "El registro todavía no está conectado al servicio de autenticación.",
-    );
+    try {
+      const authData = {
+        userEmail: formData.get("email"),
+        userPassword: formData.get("password"),
+      };
+      await axios.post(`${API_URL}/auth/signup`, authData);
+      setMessage("Cuenta creada exitosamente.");
+    } catch {
+      setMessage("Error al registrar la cuenta.");
+    }
   }
 
   return (
