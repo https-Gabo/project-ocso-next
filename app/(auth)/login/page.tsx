@@ -8,11 +8,14 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function LoginPage() {
+  const [submitting, setSubmitting] = useState(false);
+
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setSubmitting(true);
     e.preventDefault();
     setLoading(true);
     setError(null);
@@ -66,8 +69,13 @@ export default function LoginPage() {
         />
       </div>
       <div className="flex flex-col items-center gap-2">
-        <Button color="primary" type="submit" isLoading={loading}>
-          Iniciar Sesión
+        <Button
+          color="primary"
+          type="submit"
+          isLoading={loading}
+          disabled={submitting}
+        >
+          {submitting ? "Enviando..." : "Iniciar Sesión"}
         </Button>
         {error && (
           <p className="text-white bg-red-600 px-3 py-1 rounded text-sm text-center">
