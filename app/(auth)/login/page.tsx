@@ -1,6 +1,6 @@
 "use client";
 
-import { API_URL } from "@/constants";
+import { API_URL, TOKEN_NAME } from "@/constants";
 import { Button, Input } from "@nextui-org/react";
 import axios from "axios";
 import Link from "next/link";
@@ -19,6 +19,8 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    localStorage.removeItem(TOKEN_NAME);
+    document.cookie = `${TOKEN_NAME}=; Max-Age=0; path=/`;
     try {
       const formData = new FormData(e.currentTarget);
       let authData: any = {};
@@ -33,14 +35,18 @@ export default function LoginPage() {
           withCredentials: true,
         },
       );
-      console.log(data);
-      if (data?.token) {
-        localStorage.setItem("token", data.token);
+      const token = data?.token ?? data?.accessToken ?? data?.access_token;
+      if (!token) {
+        throw new Error("El backend no devolvió un token de acceso");
       }
+      localStorage.setItem(TOKEN_NAME, token);
+      document.cookie = `${TOKEN_NAME}=${token}; path=/; SameSite=Lax`;
       router.push("/dashboard");
     } catch (err: any) {
       setError(
-        err?.response?.data?.message || "Ocurrió un error al iniciar sesión",
+        err?.response?.data?.message ||
+          err?.message ||
+          "Ocurrió un error al iniciar sesión",
       );
     } finally {
       setLoading(false);

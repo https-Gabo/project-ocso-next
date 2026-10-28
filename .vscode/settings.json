@@ -1,4 +1,49 @@
 {
   "chat.disableAIFeatures": false,
-  "css.lint.unknownAtRules": "ignore"
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
+  },
+  "continue.enableTabAutocomplete": false,
+  "continue.enableNextEdit": false,
+  "continue.showInlineTip": false,
+  "supermaven.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": false
+  },
+  "supermaven.otherWarning": false,
+  "css.lint.unknownAtRules": "ignore",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  "editor.inlineSuggest.enabled": true,
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": true
+  },
+  "editor.suggestSelection": "first",
+  "editor.tabCompletion": "on",
+  "editor.acceptSuggestionOnCommitCharacter": true,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+  "js/ts.suggest.autoImports": true,
+  "js/ts.updateImportsOnFileMove.enabled": "always",
+  "tailwindCSS.emmetCompletions": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "telemetry.telemetryLevel": "off",
+  "editor.smoothScrolling": false,
+  "workbench.list.smoothScrolling": false
 }
