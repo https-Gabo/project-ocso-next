@@ -1,15 +1,14 @@
-import { API_URL, TOKEN_NAME } from "@/constants";
+import { API_URL } from "@/constants";
 import { Employee } from "@/entities";
+import { authHeaders } from "@/helpers/authHeaders";
 import { Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
 import axios from "axios";
-import { cookies } from "next/headers";
 
 export default async function EmployeesLocation({
   stores,
 }: {
   stores: string[];
 }) {
-  const token = cookies().get(TOKEN_NAME)?.value;
   const selectedStores = stores.filter((store) => store !== "none");
 
   if (selectedStores.length === 0) {
@@ -23,9 +22,7 @@ export default async function EmployeesLocation({
   const responses = await Promise.allSettled(
     selectedStores.map((store) =>
       axios.get<Employee[]>(`${API_URL}/employees/location/${store}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: authHeaders(),
       }),
     ),
   );

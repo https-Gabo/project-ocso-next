@@ -50,6 +50,7 @@ export default function LoginPage() {
       );
     } finally {
       setLoading(false);
+      setSubmitting(false);
     }
   };
   return (

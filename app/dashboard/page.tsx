@@ -1,4 +1,4 @@
-import EmployeesLocation from "./@locations/components/EmployeesLocation";
+import EmployeesLocation from "./@locations/_components/EmployeesLocation";
 
 export default function DashboardPage({
   searchParams,

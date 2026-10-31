@@ -1,23 +1,22 @@
-import { API_URL, TOKEN_NAME } from "@/constants";
+import { API_URL } from "@/constants";
 import { Location } from "@/entities";
+import { authHeaders } from "@/helpers/authHeaders";
 import axios from "axios";
-import { cookies } from "next/headers";
-import LocationCard from "./components/LocationCard";
-import SelectLocation from "./components/SelectLocation";
+import DeleteLocationButton from "./_components/DeleteLocation";
+import FormNewLocation from "./_components/FormNewLocation";
+import LocationCard from "./_components/LocationCard";
+import SelectLocation from "./_components/SelectLocation";
 export const dynamic = "force-dynamic";
 const LocationsPage = async ({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  const token = cookies().get(TOKEN_NAME)?.value;
   let locations: Location[] = [];
 
   try {
     const { data } = await axios.get<Location[]>(`${API_URL}/locations`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: authHeaders(),
     });
     locations = Array.isArray(data) ? data : [];
   } catch {
@@ -53,6 +52,10 @@ const LocationsPage = async ({
             )}
           />
         </div>
+        <div className="w-6/12">
+          <FormNewLocation store={searchParams.store} />
+        </div>
+        <DeleteLocationButton store={searchParams.store} />
       </div>
     </div>
   );
