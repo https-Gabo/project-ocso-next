@@ -1,12 +1,28 @@
+import { API_URL } from "@/constants";
 import { Location } from "@/entities";
+import { authHeaders } from "@/helpers/authHeaders";
 import { Card, CardBody, CardHeader, Divider, Link } from "@nextui-org/react";
 
 export default async function LocationCard({
-  location,
+  store,
 }: {
-  location: Location | undefined;
+  store: string | undefined;
 }) {
-  if (!location) return null;
+  if (!store) return null;
+  const response = await fetch(`${API_URL}/locations/${store}`, {
+    headers: authHeaders(),
+    next: { tags: ["dashboard:locations", `dashboard:locations:${store}`] },
+  });
+  if (!response.ok) return null;
+  const location: Location = await response.json();
+
+  if (!location) {
+    return (
+      <p className="w-full px-2 text-center text-2xl">
+        No se encontró la tienda seleccionada
+      </p>
+    );
+  }
 
   return (
     <Card>

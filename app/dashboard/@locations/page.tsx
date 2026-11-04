@@ -1,7 +1,6 @@
 import { API_URL } from "@/constants";
 import { Location } from "@/entities";
 import { authHeaders } from "@/helpers/authHeaders";
-import axios from "axios";
 import DeleteLocationButton from "./_components/DeleteLocation";
 import FormNewLocation from "./_components/FormNewLocation";
 import LocationCard from "./_components/LocationCard";
@@ -15,10 +14,13 @@ const LocationsPage = async ({
   let locations: Location[] = [];
 
   try {
-    const { data } = await axios.get<Location[]>(`${API_URL}/locations`, {
+    const response = await fetch(`${API_URL}/locations`, {
       headers: authHeaders(),
+      next: { tags: ["dashboard:locations"] },
     });
-    locations = Array.isArray(data) ? data : [];
+    if (!response.ok) throw new Error("No se pudieron cargar las tiendas");
+    const data: unknown = await response.json();
+    locations = Array.isArray(data) ? (data as Location[]) : [];
   } catch {
     locations = [];
   }
@@ -40,16 +42,11 @@ const LocationsPage = async ({
         </div>
         <div className="w-3/12">
           <LocationCard
-            location={locations.find((location) =>
-              searchParams.store
-                ? String(location.locationId) ===
-                  String(
-                    Array.isArray(searchParams.store)
-                      ? searchParams.store[0]
-                      : searchParams.store,
-                  )
-                : false,
-            )}
+            store={
+              Array.isArray(searchParams.store)
+                ? searchParams.store[0]
+                : searchParams.store
+            }
           />
         </div>
         <div className="w-6/12">

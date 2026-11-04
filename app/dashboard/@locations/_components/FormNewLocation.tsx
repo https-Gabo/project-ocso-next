@@ -2,7 +2,6 @@ import { createLocation } from "@/actions/locations/create";
 import { API_URL } from "@/constants";
 import { authHeaders } from "@/helpers/authHeaders";
 import { Button, Input } from "@nextui-org/react";
-import axios from "axios";
 import SelectManager from "./SelectManager";
 export default async function FormNewLocation({
   store,
@@ -10,12 +9,20 @@ export default async function FormNewLocation({
   store: string | string[] | undefined;
 }) {
   if (store) return null;
-  const responseManagers = await axios.get(`${API_URL}/managers`, {
+  const responseManagers = await fetch(`${API_URL}/managers`, {
     headers: authHeaders(),
-  });
-  const responseLocation = await axios.get(`${API_URL}/locations`, {
+    next: { tags: ["dashboard:managers"] },
+  }
+    
+  );
+  const responseLocation = await fetch(`${API_URL}/locations`, {
     headers: authHeaders(),
+    next: {tags: ["dashboard:locations"]}
   });
+  if (!responseManagers.ok || !responseLocation.ok) return null;
+
+  const managers = await responseManagers.json();
+  const locations = await responseLocation.json();
   return (
     <form
       action={createLocation}
@@ -31,8 +38,8 @@ export default async function FormNewLocation({
       <Input label="Latitud" placeholder="-120" name="locationLat" />
       <Input label="Longitud" placeholder="20" name="locationLng" />
       <SelectManager
-        managers={responseManagers.data}
-        locations={responseLocation.data}
+        managers={Array.isArray(managers) ? managers : []}
+        locations={Array.isArray(locations) ? locations : []}
       />
 
       <Button type="submit" color="primary">

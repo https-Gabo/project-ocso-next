@@ -2,7 +2,6 @@
 
 import { API_URL, TOKEN_NAME } from "@/constants";
 import { Button, Input } from "@nextui-org/react";
-import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -14,7 +13,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: any) => {
     setSubmitting(true);
     e.preventDefault();
     setLoading(true);
@@ -26,15 +25,18 @@ export default function LoginPage() {
       let authData: any = {};
       authData.userEmail = formData.get("userEmail");
       authData.userPassword = formData.get("userPassword");
-      const { data } = await axios.post(
-        `${API_URL}/auth/login`,
-        {
-          ...authData,
+      const response = await fetch(`${API_URL}/auth/login`, {
+        method: "POST",
+        body: JSON.stringify(authData),
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
         },
-        {
-          withCredentials: true,
-        },
-      );
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data?.message || "No se pudo iniciar sesión");
+      }
       const token = data?.token ?? data?.accessToken ?? data?.access_token;
       if (!token) {
         throw new Error("El backend no devolvió un token de acceso");
@@ -43,11 +45,7 @@ export default function LoginPage() {
       document.cookie = `${TOKEN_NAME}=${token}; path=/; SameSite=Lax`;
       router.push("/dashboard");
     } catch (err: any) {
-      setError(
-        err?.response?.data?.message ||
-          err?.message ||
-          "Ocurrió un error al iniciar sesión",
-      );
+      setError(err?.message || "Ocurrió un error al iniciar sesión");
     } finally {
       setLoading(false);
       setSubmitting(false);

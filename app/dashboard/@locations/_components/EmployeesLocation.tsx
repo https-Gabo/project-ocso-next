@@ -2,7 +2,6 @@ import { API_URL } from "@/constants";
 import { Employee } from "@/entities";
 import { authHeaders } from "@/helpers/authHeaders";
 import { Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
-import axios from "axios";
 
 export default async function EmployeesLocation({
   stores,
@@ -20,16 +19,21 @@ export default async function EmployeesLocation({
   }
 
   const responses = await Promise.allSettled(
-    selectedStores.map((store) =>
-      axios.get<Employee[]>(`${API_URL}/employees/location/${store}`, {
-        headers: authHeaders(),
-      }),
-    ),
+    selectedStores.map(async (store) => {
+      const response = await fetch(`${API_URL}/employees/location/${store}`, {
+        method: "GET",
+        headers: {
+          ...authHeaders(),
+        },
+        next: { tags: ["dashboard:locations:employees"] },
+      });
+      if (!response.ok) throw new Error("No se pudieron cargar los empleados");
+      const data: unknown = await response.json();
+      return Array.isArray(data) ? (data as Employee[]) : [];
+    }),
   );
   const employees = responses.flatMap((response) =>
-    response.status === "fulfilled" && Array.isArray(response.value.data)
-      ? response.value.data
-      : [],
+    response.status === "fulfilled" ? response.value : [],
   );
 
   if (employees.length === 0) {

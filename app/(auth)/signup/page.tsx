@@ -1,7 +1,6 @@
 "use client";
 
 import { API_URL } from "@/constants";
-import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -22,7 +21,14 @@ export default function SignupPage() {
         userEmail: formData.get("email"),
         userPassword: formData.get("password"),
       };
-      await axios.post(`${API_URL}/auth/signup`, authData);
+      const response = await fetch(`${API_URL}/auth/signup`, {
+        method: "POST",
+        body: JSON.stringify(authData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) throw new Error("No se pudo crear la cuenta");
       setMessage("Cuenta creada exitosamente.");
     } catch {
       setMessage("Error al registrar la cuenta.");
