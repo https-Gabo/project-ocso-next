@@ -3,8 +3,10 @@ import { Location } from "@/entities";
 import { authHeaders } from "@/helpers/authHeaders";
 import DeleteLocationButton from "./_components/DeleteLocation";
 import FormNewLocation from "./_components/FormNewLocation";
+import FormUpdateLocation from "./_components/FormUpdateLocation";
 import LocationCard from "./_components/LocationCard";
 import SelectLocation from "./_components/SelectLocation";
+import UpdateLocation from "./_components/UpdateLocation";
 export const dynamic = "force-dynamic";
 const LocationsPage = async ({
   searchParams,
@@ -53,6 +55,9 @@ const LocationsPage = async ({
           <FormNewLocation store={searchParams.store} />
         </div>
         <DeleteLocationButton store={searchParams.store} />
+        <UpdateLocation>
+          <FormUpdateLocation store={searchParams.store} />
+        </UpdateLocation>
       </div>
     </div>
   );
