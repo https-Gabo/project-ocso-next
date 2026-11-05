@@ -1,4 +1,4 @@
-import { createLocation } from "@/actions/locations/create";
+import { updateLocation } from "@/actions/locations/update";
 import { API_URL } from "@/constants";
 import { Location, Manager } from "@/entities";
 import { authHeaders } from "@/helpers/authHeaders";
@@ -9,7 +9,8 @@ export default async function FormNewLocation({
 }: {
   store: string | string[] | undefined;
 }) {
-  if (!store || store === undefined) return null;
+  if (!store || store === undefined || typeof store === "object") return null;
+  const updateWithStoreId = updateLocation.bind(null, store);
   const responseManagers = await fetch(`${API_URL}/managers`, {
     headers: authHeaders(),
     next: { tags: ["dashboard:managers"] },
@@ -34,29 +35,33 @@ export default async function FormNewLocation({
 
   return (
     <form
-      action={createLocation}
-      className="bg-orange-400 py-2 px-4 flex flex-col gap-6 w-full rounded-lg"
+      action={updateWithStoreId}
+      className="bg-orange-400 py-2 px-10 flex flex-col gap-6 w-full rounded-lg"
     >
       <h1 className="text-3x1 text-white text-center"> Crear tienda</h1>
       <Input
+        required={true}
         defaultValue={foundLocation?.locationName}
         label="Nombre"
         placeholder="Ocso Jurikiya"
         name="locationName"
       />
       <Input
+        required={true}
         defaultValue={foundLocation?.locationAddress}
         label="Dirección"
         placeholder="Av De La Luz S/N"
         name="locationAddress"
       />
       <Input
+        required={true}
         defaultValue={foundLocation?.locationLatLng[0].toString()}
         label="Latitud"
         placeholder="-120"
         name="locationLat"
       />
       <Input
+        required={true}
         defaultValue={foundLocation?.locationLatLng[1].toString()}
         label="Longitud"
         placeholder="20"
@@ -69,8 +74,7 @@ export default async function FormNewLocation({
       />
 
       <Button type="submit" color="primary">
-        {" "}
-        Subir{" "}
+        Actualizar
       </Button>
     </form>
   );

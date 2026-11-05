@@ -12,12 +12,10 @@ export default async function FormNewLocation({
   const responseManagers = await fetch(`${API_URL}/managers`, {
     headers: authHeaders(),
     next: { tags: ["dashboard:managers"] },
-  }
-    
-  );
+  });
   const responseLocation = await fetch(`${API_URL}/locations`, {
     headers: authHeaders(),
-    next: {tags: ["dashboard:locations"]}
+    next: { tags: ["dashboard:locations"] },
   });
   if (!responseManagers.ok || !responseLocation.ok) return null;
 
@@ -29,14 +27,30 @@ export default async function FormNewLocation({
       className="bg-orange-400 py-2 px-4 flex flex-col gap-6 w-full rounded-lg"
     >
       <h1 className="text-3x1 text-white text-center"> Crear tienda</h1>
-      <Input label="Nombre" placeholder="Ocso Jurikiya" name="locationName" />
       <Input
+        required={true}
+        label="Nombre"
+        placeholder="Ocso Jurikiya"
+        name="locationName"
+      />
+      <Input
+        required={true}
         label="Dirección"
         placeholder="Av De La Luz S/N"
         name="locationAddress"
       />
-      <Input label="Latitud" placeholder="-120" name="locationLat" />
-      <Input label="Longitud" placeholder="20" name="locationLng" />
+      <Input
+        required={true}
+        label="Latitud"
+        placeholder="-120"
+        name="locationLat"
+      />
+      <Input
+        required={true}
+        label="Longitud"
+        placeholder="20"
+        name="locationLng"
+      />
       <SelectManager
         managers={Array.isArray(managers) ? managers : []}
         locations={Array.isArray(locations) ? locations : []}

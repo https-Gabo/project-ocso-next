@@ -5,27 +5,34 @@ import {
   ModalBody,
   ModalContent,
   ModalFooter,
-  ModalHeader,
   useDisclosure,
 } from "@nextui-org/react";
 import { ReactNode } from "react";
-import { LuPenTool } from "react-icons/lu";
+import { LuPencil } from "react-icons/lu";
 
-export default function UpdateLocation({ children }: { children: ReactNode }) {
+export default function UpdateLocation({
+  children,
+  store,
+}: {
+  children: ReactNode;
+  store: string | string[] | undefined;
+}) {
+  if (!store) return null;
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
     <>
       <Button onPress={onOpen} color="primary">
-        <LuPenTool size="20" />
+        <LuPencil size="20" />
       </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent>
+      <Modal
+        className="bg-orange-400"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      >
+        <ModalContent className="w-full">
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
-                Modal Title
-              </ModalHeader>
               <ModalBody>{children}</ModalBody>
               <ModalFooter></ModalFooter>
             </>
