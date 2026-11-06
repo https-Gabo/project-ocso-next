@@ -27,16 +27,29 @@ export default async function LocationCard({
   return (
     <Card>
       <CardHeader>
-        <b className="w-full">{location.locationName}</b>
+        <b className="w-full text-2xl">{location.locationName}</b>
       </CardHeader>
       <Divider />
-      <CardBody>
+      <CardBody className="flex flex-col w-full items-center">
         <p className="w-full">
-          Manager:
-          <Link href="/dashboard/managers">
-            <b>{location.manager?.managerFullName ?? "Sin asignar"}</b>
-          </Link>
+          Manager:{" "}
+          {location.manager ? (
+            <Link href={`/dashboard/managers/${location.manager.managerId}`}>
+              <b>{location.manager.managerFullName}</b>
+            </Link>
+          ) : (
+            <b>Sin manager</b>
+          )}
         </p>
+        <p className="w-full">
+          Dirección: <b>{location.locationAddress}</b>
+        </p>
+        <iframe
+          className="border-2 border-orange-800 rounded-md my-2"
+          width="300"
+          height="200"
+          src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyAz0Y6dhhUVleZmt7-H4P01QQWCSEz3LBg&q=${location.locationLatLng[0]},${location.locationLatLng[1]}`}
+        ></iframe>
       </CardBody>
     </Card>
   );
