@@ -6,7 +6,9 @@ export default function DeleteManagerButton({
 }: {
   managerId: string;
 }) {
-  const deleteByManagerId = deleteManager.bind(null, managerId);
+  const deleteByManagerId = async (formData: FormData) => {
+    await deleteManager(managerId, formData);
+  };
   return (
     <form action={deleteByManagerId}>
       <Button color="danger" type="submit">

@@ -12,13 +12,15 @@ export default function LayoutDashboard({
 }>) {
   const path = usePathname();
   return (
-    <div className="bg-orange-50">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#fff7ed_0%,_#fffaf5_35%,_#fff1e6_100%)] text-slate-800">
       <Header />
-      <div className="flex flex-row items-center">
+      <div className="flex flex-row items-stretch gap-4 px-4 pb-4 pt-3">
         <Sidebar />
-        {children}
-        {locations}
-        {path === "/dashboard" ? locations : null}
+        <div className="flex flex-1 items-stretch gap-4">
+          {children}
+          {locations}
+          {path === "/dashboard" ? locations : null}
+        </div>
       </div>
     </div>
   );

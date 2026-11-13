@@ -10,7 +10,9 @@ export default async function FormNewLocation({
   store: string | string[] | undefined;
 }) {
   if (!store || store === undefined || typeof store === "object") return null;
-  const updateWithStoreId = updateLocation.bind(null, store);
+  const updateWithStoreId = async (formData: FormData) => {
+    await updateLocation(store, formData);
+  };
   const responseManagers = await fetch(`${API_URL}/managers`, {
     headers: authHeaders(),
     next: { tags: ["dashboard:managers"] },
