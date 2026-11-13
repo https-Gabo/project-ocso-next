@@ -41,6 +41,7 @@ export default function ManagerCard({ manager }: { manager: Manager }) {
               {manager.managerPhoneNumber}
             </p>
           </div>
+          
           <div className="rounded-2xl border border-orange-100 bg-white p-3 shadow-sm">
             <span className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
               Salario
