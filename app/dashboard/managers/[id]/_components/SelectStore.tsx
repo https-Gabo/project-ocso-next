@@ -10,13 +10,15 @@ export default function SelectStore({
 }) {
   const disabledStores = stores
     .map((store: Location) => {
-      if (store.manager !== undefined) {
+      if (store.manager !== undefined && store.locationId !== defaultStore) {
         return String(store.locationId);
       }
     })
     .filter((storeId) => storeId !== undefined);
   return (
     <Select
+      label="Tienda"
+      name="location"
       defaultSelectedKeys={defaultStore ? [defaultStore] : undefined}
       disabledKeys={disabledStores}
     >
