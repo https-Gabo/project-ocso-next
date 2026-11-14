@@ -3,6 +3,7 @@ import { Product, Provider } from "@/entities";
 import { authHeaders } from "@/helpers/authHeaders";
 import Link from "next/link";
 import ProviderCard from "../_components/ProviderCard";
+import FormUpdateProvider from "./_components/FormUpdateProvider";
 import ProductCard from "./_components/ProductCard";
 export default async function ProviderPage({
   params,
@@ -16,11 +17,17 @@ export default async function ProviderPage({
       headers: {
         ...authHeaders(),
       },
+      next: {
+        tags: ["dashboard/providers:${params.id}"],
+      },
     })
   ).json();
   return (
     <div className="flex h-[90vh] flex-grow-0 flex-col gap-10 pl-10 pt-10">
-      <ProviderCard provider={provider} />
+      <div className="flex flex-row items-center gap-6">
+        <ProviderCard provider={provider} />
+        <FormUpdateProvider provider={provider} />
+      </div>
       <div className="h-1 w-[90vw] bg-orange-900 " />
       <div className="flex flex-wrap gap-10">
         {provider.products.map((product: Product) => (

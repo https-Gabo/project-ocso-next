@@ -1,3 +1,4 @@
+"use server";
 import { API_URL } from "@/constants";
 import { authHeaders } from "@/helpers/authHeaders";
 import { revalidateTag } from "next/cache";
@@ -14,7 +15,6 @@ export default async function createProvider(formData: FormData) {
       ...authHeaders(),
       "content-type": "application/json",
     },
-    
   });
   if (response.status === 201) revalidateTag("dashboard:providers");
 }
