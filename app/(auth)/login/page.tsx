@@ -53,11 +53,11 @@ export default function LoginPage() {
   };
   return (
     <form
-      className="bg-orange-500 px-10 py-2 rounded-md"
+      className="w-full rounded-xl border border-orange-100 bg-white p-6 shadow-[0_20px_45px_rgba(124,45,18,0.12)] sm:p-8"
       onSubmit={handleSubmit}
     >
-      <p className="text-2xl my-4 text-white">Iniciar sesión</p>
-      <div className="flex flex-col gap-2 my-4 items-center">
+      <p className="my-2 text-2xl font-bold text-slate-800">Iniciar sesión</p>
+      <div className="my-5 flex flex-col items-center gap-3">
         <Input
           label="Email"
           name="userEmail"
@@ -83,13 +83,16 @@ export default function LoginPage() {
           {submitting ? "Enviando..." : "Iniciar Sesión"}
         </Button>
         {error && (
-          <p className="text-white bg-red-600 px-3 py-1 rounded text-sm text-center">
+          <p className="rounded-md bg-red-50 px-3 py-2 text-center text-sm text-red-700">
             {error}
           </p>
         )}
-        <p className="text-white">
+        <p className="text-sm text-slate-600">
           ¿No tienes cuenta?{" "}
-          <Link href="/signup" className="text-red-600 underline">
+          <Link
+            href="/signup"
+            className="font-semibold text-orange-700 hover:underline"
+          >
             Regístrate
           </Link>
         </p>
