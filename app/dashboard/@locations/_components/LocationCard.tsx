@@ -75,7 +75,7 @@ export default async function LocationCard({
         <div className="w-full overflow-hidden rounded-2xl border border-orange-200 bg-orange-50 p-2 shadow-inner">
           <iframe
             className="h-[220px] w-full rounded-xl border-0"
-            src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyAz0Y6dhhUVleZmt7-H4P01QQWCSEz3LBg&q=${location.locationLatLng[0]},${location.locationLatLng[1]}`}
+            src={`https://www.google.com/maps?q=${location.locationLatLng[0]},${location.locationLatLng[1]}&output=embed`}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           ></iframe>

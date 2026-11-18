@@ -18,18 +18,19 @@ export default async function ProviderPage({
         ...authHeaders(),
       },
       next: {
-        tags: ["dashboard/providers:${params.id}"],
+        tags: ["dashboard:providers", `dashboard:providers:${params.id}`],
       },
     })
   ).json();
   return (
-    <div className="flex h-[90vh] flex-grow-0 flex-col gap-10 pl-10 pt-10">
-      <div className="flex flex-row items-center gap-6">
+    <main className="h-[calc(100vh-104px)] w-full overflow-y-auto px-5 py-7 sm:px-8 lg:px-10">
+      <div className="mx-auto flex max-w-7xl flex-col gap-8">
+        <div className="grid grid-cols-1 items-stretch gap-6 xl:grid-cols-[minmax(280px,360px)_minmax(420px,1fr)]">
         <ProviderCard provider={provider} />
         <FormUpdateProvider provider={provider} />
-      </div>
-      <div className="h-1 w-[90vw] bg-orange-900 " />
-      <div className="flex flex-wrap gap-10">
+        </div>
+      <div className="h-px w-full bg-orange-200" />
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
         {provider.products.map((product: Product) => (
           <Link
             href={{ pathname: `/dashboard/products/${product.productId}` }}
@@ -40,6 +41,7 @@ export default async function ProviderPage({
           </Link>
         ))}
       </div>
-    </div>
+      </div>
+    </main>
   );
 }

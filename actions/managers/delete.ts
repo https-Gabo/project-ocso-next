@@ -4,10 +4,8 @@ import { API_URL } from "@/constants";
 import { authHeaders } from "@/helpers/authHeaders";
 import { revalidateTag } from "next/cache";
 
-export default async function createManager(
-  managerId: string,
-  formData: FormData,
-) {
+export default async function deleteManager(formData: FormData) {
+  const managerId = String(formData.get("managerId") ?? "");
   const response = await fetch(`${API_URL}/managers/${managerId}`, {
     method: "DELETE",
     headers: {

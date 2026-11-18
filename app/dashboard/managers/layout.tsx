@@ -1,6 +1,6 @@
-"use cliente";
+"use client";
 import { ReactNode } from "react";
-import ManagerCards from "./_components/ManagerCards";
+
 export default function LayoutManagers({
   children,
   count,
@@ -9,12 +9,11 @@ export default function LayoutManagers({
   count: ReactNode;
 }) {
   return (
-    <div className="w-4/12 max-h-90[vh] h-90[vh]">
-      <ManagerCards />
-      <div className="w-7/12 flex flex-col justify-center items-center gap-10">
-        <div>{children}</div>
+    <div className="grid h-[calc(100vh-104px)] w-full grid-cols-1 gap-5 overflow-hidden xl:grid-cols-[minmax(0,1fr)_minmax(360px,420px)]">
+      <div className="min-w-0 overflow-y-auto">{children}</div>
+      <aside className="hidden flex-col justify-center gap-5 overflow-y-auto rounded-2xl border border-orange-100 bg-white/60 p-5 xl:flex">
         <div>{count}</div>
-      </div>
+      </aside>
     </div>
   );
 }

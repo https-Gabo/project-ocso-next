@@ -31,14 +31,14 @@ export default async function ManagerPage({
 
   const data: Manager = await response.json();
   return (
-    <div className="flex flex-col gap-10 flex-grow-0 items-center justify-center">
+    <main className="mx-auto flex h-[calc(100vh-104px)] w-full max-w-7xl flex-col justify-center gap-6 overflow-y-auto px-5 py-6">
       <ManagerCard manager={data} />
-      <div className="bg-white shadow-medium rounded-md px-10 py-2 flex flex-row flex-grow-0 gap-2">
+      <div className="flex flex-row flex-wrap items-center justify-center gap-3 rounded-2xl border border-orange-100 bg-white px-6 py-4 shadow-[0_12px_30px_rgba(124,45,18,0.07)]">
         <UpdateManager>
           <FormUpdateManager manager={data} />
         </UpdateManager>
         <DeleteManagerButton managerId={data.managerId} />
       </div>
-    </div>
+    </main>
   );
 }

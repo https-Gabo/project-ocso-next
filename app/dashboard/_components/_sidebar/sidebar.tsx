@@ -3,8 +3,8 @@ import NavItem from "./NavItem";
 
 export default function Sidebar() {
   return (
-    <aside className="h-[90vh] w-20 shrink-0 rounded-2xl border border-orange-200 bg-white/80 p-3 shadow-[0_12px_35px_rgba(251,146,60,0.10)] backdrop-blur-sm">
-      <nav className="flex h-full flex-col items-center justify-center gap-3">
+    <aside className="h-[90vh] w-24 shrink-0 rounded-2xl border border-orange-200 bg-white/80 p-3 shadow-[0_12px_35px_rgba(251,146,60,0.10)] backdrop-blur-sm">
+      <nav className="flex h-full flex-col items-center justify-around py-4">
         <NavItem icon={<LuStore />} label="Inicio" path="/dashboard" />
         <NavItem
           icon={<LuTruck />}

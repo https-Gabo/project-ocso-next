@@ -75,7 +75,7 @@ export default function ManagerCard({ manager }: { manager: Manager }) {
           <div className="w-full max-w-[360px] overflow-hidden rounded-2xl border border-orange-200 bg-orange-50 p-2 shadow-inner">
             <iframe
               className="h-[220px] w-full rounded-xl border-0"
-              src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyAz0Y6dhhUVleZmt7-H4P01QQWCSEz3LBg&q=${manager.location.locationLatLng[0]},${manager.location.locationLatLng[1]}`}
+              src={`https://www.google.com/maps?q=${manager.location.locationLatLng[0]},${manager.location.locationLatLng[1]}&output=embed`}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>

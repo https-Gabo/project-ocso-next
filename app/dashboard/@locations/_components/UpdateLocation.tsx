@@ -17,8 +17,8 @@ export default function UpdateLocation({
   children: ReactNode;
   store: string | string[] | undefined;
 }) {
-  if (!store) return null;
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  if (!store) return null;
 
   return (
     <>

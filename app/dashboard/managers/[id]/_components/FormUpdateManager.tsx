@@ -10,10 +10,6 @@ export default async function FormUpdateManager({
 }: {
   manager: Manager;
 }) {
-  const updateManagerWithId = async (formData: FormData) => {
-    await updateManager(manager.managerId, formData);
-  };
-
   const responseStores = await fetch(`${API_URL}/locations`, {
     headers: {
       ...authHeaders(),
@@ -31,9 +27,10 @@ export default async function FormUpdateManager({
 
   return (
     <form
-      action={updateManagerWithId}
+      action={updateManager}
       className="bg-orange-400 rounded-md flex flex-col flex-grow-0 gap-2"
     >
+      <input type="hidden" name="managerId" value={manager.managerId} />
       <h1 className="text-2x1 text-white font-semibold text-center"> Actualizar Manager </h1>
       <Input
         required={true}

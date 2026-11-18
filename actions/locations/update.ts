@@ -6,7 +6,8 @@ import { authHeaders } from "@/helpers/authHeaders";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
-export async function updateLocation(store: string, formData: FormData) {
+export async function updateLocation(formData: FormData) {
+  const store = String(formData.get("store") ?? "");
   let location: any = {};
   let locationLatLng = [0, 0];
 

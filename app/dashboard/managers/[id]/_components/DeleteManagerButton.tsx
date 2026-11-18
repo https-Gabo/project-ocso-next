@@ -6,11 +6,9 @@ export default function DeleteManagerButton({
 }: {
   managerId: string;
 }) {
-  const deleteByManagerId = async (formData: FormData) => {
-    await deleteManager(managerId, formData);
-  };
   return (
-    <form action={deleteByManagerId}>
+    <form action={deleteManager}>
+      <input type="hidden" name="managerId" value={managerId} />
       <Button color="danger" type="submit">
         <LuTrash size="20" />
       </Button>

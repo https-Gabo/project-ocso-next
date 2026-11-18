@@ -12,8 +12,8 @@ export default function DashboardPage({
     : [];
 
   return (
-    <div className="flex flex-1 justify-center">
-      <div className="h-[90vh] w-full max-w-xl rounded-[28px] border border-orange-200 bg-white/75 shadow-[0_20px_45px_rgba(251,146,60,0.10)] backdrop-blur-sm">
+    <div className="h-[calc(100vh-104px)] min-w-0 flex-1">
+      <div className="h-full w-full rounded-[28px] border border-orange-200 bg-white/75 shadow-[0_20px_45px_rgba(251,146,60,0.10)] backdrop-blur-sm">
         <div className="h-full overflow-hidden overflow-y-auto p-5">
           {stores.length > 0 ? (
             <EmployeesLocation stores={stores} />

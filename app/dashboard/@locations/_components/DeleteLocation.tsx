@@ -9,12 +9,9 @@ export default function DeleteLocationButton({
 }) {
   if (!store) return null;
   const locationId = Array.isArray(store) ? store[0] : store;
-  const deleteByLocationId = async (formData: FormData) => {
-    await deleteLocation(locationId);
-  };
-
   return (
-    <form action={deleteByLocationId} className="my-4">
+    <form action={deleteLocation} className="my-4">
+      <input type="hidden" name="locationId" value={locationId} />
       <Button type="submit" color="danger">
         <LuTrash size="20" />
       </Button>

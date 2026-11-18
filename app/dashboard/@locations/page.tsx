@@ -37,12 +37,12 @@ const LocationsPage = async ({
     ...locations,
   ];
   return (
-    <div className="w-7/12">
-      <div className="w-full flex flex-col items-center h-[90vh] bg-red-50">
-        <div className="w-1/2 my-10">
+    <div className="w-full">
+      <div className="grid h-[calc(100vh-104px)] w-full grid-cols-1 content-start gap-5 overflow-y-auto rounded-[28px] border border-orange-200 bg-white/75 p-5 shadow-[0_20px_45px_rgba(251,146,60,0.10)] xl:grid-cols-2">
+        <div className="w-full xl:col-span-2">
           <SelectLocation locations={locations} store={searchParams?.store} />
         </div>
-        <div className="w-3/12">
+        <div className="w-full">
           <LocationCard
             store={
               Array.isArray(searchParams.store)
@@ -51,10 +51,10 @@ const LocationsPage = async ({
             }
           />
         </div>
-        <div className="w-6/12">
+        <div className="w-full">
           <FormNewLocation store={searchParams.store} />
         </div>
-        <div className="flex flex-row flex-grow-0 gap-10 items-center">
+        <div className="flex flex-row items-center justify-center gap-4 xl:col-span-2">
           <DeleteLocationButton store={searchParams.store} />
           <UpdateLocation store = {searchParams.store}>
             <FormUpdateLocation store={searchParams.store} />

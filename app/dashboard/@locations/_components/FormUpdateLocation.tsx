@@ -10,9 +10,6 @@ export default async function FormNewLocation({
   store: string | string[] | undefined;
 }) {
   if (!store || store === undefined || typeof store === "object") return null;
-  const updateWithStoreId = async (formData: FormData) => {
-    await updateLocation(store, formData);
-  };
   const responseManagers = await fetch(`${API_URL}/managers`, {
     headers: authHeaders(),
     next: { tags: ["dashboard:managers"] },
@@ -37,9 +34,10 @@ export default async function FormNewLocation({
 
   return (
     <form
-      action={updateWithStoreId}
+      action={updateLocation}
       className="bg-orange-400 py-2 px-10 flex flex-col gap-6 w-full rounded-lg"
     >
+      <input type="hidden" name="store" value={String(store)} />
       <h1 className="text-3x1 text-white text-center"> Crear tienda</h1>
       <Input
         required={true}

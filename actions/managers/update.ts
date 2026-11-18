@@ -5,10 +5,8 @@ import { authHeaders } from "@/helpers/authHeaders";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
-export default async function createManager(
-  managerId: string,
-  formData: FormData,
-) {
+export default async function updateManager(formData: FormData) {
+  const managerId = String(formData.get("managerId") ?? "");
   let manager: any = {};
   for (const key of formData.keys()) {
     manager[key] = formData.get(key);
@@ -26,7 +24,7 @@ export default async function createManager(
   });
   if (response.status === 200) {
     revalidateTag("dashboard:managers");
-    revalidateTag("dashboard:managers:${managerId}");
+    revalidateTag(`dashboard:managers:${managerId}`);
     redirect("/dashboard/managers");
   }
 }

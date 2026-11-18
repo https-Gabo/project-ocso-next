@@ -2,9 +2,9 @@ import ManagerCards from "./_components/ManagerCards";
 
 const ManagersPage = async () => {
   return (
-    <div className="h-[90vh] w-8/12 overflow-hidden overflow-y-auto">
+    <main className="h-[calc(100vh-104px)] w-full overflow-y-auto px-4 py-6 sm:px-6 lg:px-8">
       <ManagerCards />
-    </div>
+    </main>
   );
 };
 

@@ -28,35 +28,28 @@ export default async function ManagerCards() {
     );
   }
 
-  return managers.map((manager) => {
-    return (
-      <Link
-        key={manager.managerId}
-        href={`/dashboard/managers/${manager.managerId}`}
-      >
-        <Card className="mx-10 my-10 transition-transform hover:scale-[1.1] hover:bg-blue-100">
-          <CardHeader>
-            <p className="w-full">
-              Nombre: <b>{manager.managerFullName}</b>
-            </p>
-          </CardHeader>
-          <Divider />
-          <CardBody>
-            <p className="w-full">
-              Email: <b>{manager.managerEmail}</b>
-            </p>
-            <p className="w-full">
-              Telefono: <b>{manager.managerPhoneNumber}</b>
-            </p>
-            <p className="w-full">
-              Salario: <b>{manager.managerSalary}</b>
-            </p>
-            <p className="w-full">
-              Tienda: <b>{manager.location?.locationName ?? "Sin tienda"}</b>
-            </p>
-          </CardBody>
-        </Card>
-      </Link>
-    );
-  });
+  return (
+    <div className="mx-auto grid max-w-6xl grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+      {managers.map((manager) => (
+        <Link
+          key={manager.managerId}
+          href={`/dashboard/managers/${manager.managerId}`}
+          className="rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+        >
+          <Card className="h-full border border-orange-200 bg-white/90 shadow-[0_12px_30px_rgba(124,45,18,0.07)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_18px_38px_rgba(124,45,18,0.12)]">
+            <CardHeader className="border-b border-orange-100 bg-gradient-to-r from-orange-50 to-white px-5 py-4">
+              <p className="w-full text-lg font-bold text-slate-800">{manager.managerFullName}</p>
+            </CardHeader>
+            <Divider />
+            <CardBody className="gap-3 px-5 py-5 text-slate-700">
+              <p><span className="text-sm text-slate-400">Email:</span> <b>{manager.managerEmail}</b></p>
+              <p><span className="text-sm text-slate-400">Teléfono:</span> <b>{manager.managerPhoneNumber}</b></p>
+              <p><span className="text-sm text-slate-400">Salario:</span> <b>{manager.managerSalary}</b></p>
+              <p><span className="text-sm text-slate-400">Tienda:</span> <b>{manager.location?.locationName ?? "Sin tienda"}</b></p>
+            </CardBody>
+          </Card>
+        </Link>
+      ))}
+    </div>
+  );
 }
