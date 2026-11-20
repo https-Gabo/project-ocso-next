@@ -31,7 +31,7 @@ export default async function ProviderPage({
         </div>
       <div className="h-px w-full bg-orange-200" />
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-        {provider.products.map((product: Product) => (
+        {(provider.products ?? []).map((product: Product) => (
           <Link
             href={{ pathname: `/dashboard/products/${product.productId}` }}
             key={product.productId}

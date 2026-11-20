@@ -9,13 +9,13 @@ export default function FormUpdateProvider({
   provider: Provider;
 }) {
   return (
-    <>
+    <div className="flex h-full flex-col">
       <h1 className="mb-4 text-2xl font-bold text-slate-800">
         Actualizar datos
       </h1>
       <form
         action={updateProvider}
-        className="grid h-full gap-5 rounded-2xl border border-orange-200 bg-white p-6 shadow-[0_16px_40px_rgba(124,45,18,0.08)] md:grid-cols-2"
+        className="grid flex-1 gap-5 rounded-2xl border border-orange-200 bg-white p-6 shadow-[0_16px_40px_rgba(124,45,18,0.08)] md:grid-cols-2"
       >
         <input type="hidden" name="providerId" value={provider.providerId} />
         <Input
@@ -40,7 +40,7 @@ export default function FormUpdateProvider({
           name="providerPhoneNumber"
         />
 
-        <div className="flex md:col-span-2 md:justify-end">
+        <div className="flex gap-3 md:col-span-2 md:justify-end">
           <Button className="min-w-36" color="primary" type="submit">
             Actualizar
           </Button>
@@ -54,6 +54,6 @@ export default function FormUpdateProvider({
           </DeleteProvider>
         </div>
       </form>
-    </>
+    </div>
   );
 }
